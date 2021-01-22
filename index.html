@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+  <link href="lesber.css" rel="stylesheet">
+	<meta name="Viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="boostrap.min.css">
+</head>
+<body>
+  
+  <div id="content">
+   
+    <canvas id="canvas"></canvas>
+<div id="nous"><div id="myBtn"><div id="mark">?</div></div>
+
+</div>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="closes">&times;</span>
+   <div id="rule">Rule</div> 
+   <div id="rul"><h4>The rules of the game are simple: you must touch all the colors that are written in the message.
+   if for example, the color is blue you have to touch just the blue circle otherwise you have lost.<br>
+  if you touch another color than what was writting in the message you lose. Each good circle touch gives you 1 point.<br>
+   if for example the color is red and you don't touch it before it touches below you lose
+   </h4></div>
+</div>
+
+</div>
+<div class="hamburger">
+      <div class="line" ></div>
+      <div class="line"  ></div>
+      <div class="line"  ></div>
+  </div>
+<div id="nav">
+<span class="close">&times;</span>
+  <ul>
+    
+    <li><a id="bl" href="https://play.google.com/store/apps/details?id=com.blackout.blackout">Black-out</a><div id="inff">
+      <span>i</span>
+      <h3>Check out all the app made by Black-out by  downloading the Black-out app just click in the link</h3>
+    </div></li>
+  </ul>
+ </div>	
+<div id="title"><h1>Switch</h1></div>
+	<a  href="catgo.html"id="pp">Circle</a>
+  <a  href="catgo2.html"id="pv">Square</a>
+ </div>
+
+<style type="text/css">
+#bl{
+  color: white;
+  text-decoration: none;
+}
+#inff{
+  width: 250px;
+  height: 250px;
+  border: 1px solid #191919;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  align-items: center;
+  z-index: 2000;
+  clip-path: circle(10% at 90% 10%);
+  border-radius: 10px;
+  background-color:rgb(0,0,0,0.3);
+  transition: all  .5s ease-in-out;
+  right: 0;
+ top:2.5px;
+ color: white;
+
+ 
+}
+
+#inff:hover{
+clip-path:circle(75%); 
+background-color: red;
+}
+span{
+  position: absolute;
+  top: 6px;
+  right: 20px;
+   opacity: 1;
+font-family: 'Lobster', cursive;
+}
+span:hover{
+  opacity: 0;
+}
+
+
+  #canvas {
+  
+    background-size: cover;
+    background-position: 50% 50%;
+    position: fixed;
+    background-image: linear-gradient(#34495e,rgb(0,0,0,0.2),#34495e)
+}
+  #content{
+     position:relative;
+  width: 100%;
+  height: 100vh;
+  }
+	#rul{
+		position: relative;
+		width: 100%;
+		top: 35%;
+font-weight:bold;
+font-size: 15px;
+padding: 5%;
+
+	}
+	h4{
+position: relative;
+bottom: 80px;
+font-size: 18px;
+	}
+	#rule{
+		position: absolute;
+		text-align: center;
+		
+		top: 10%;
+		width: 100%;
+		font-size: 30px;
+letter-spacing: 5px;
+	}
+.hamburger{
+	height: 7vh;
+	width: 15%;
+	
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+  z-index: 1000;
+ 
+}
+	.line{
+		
+     width: 35px;
+     height: 4px;
+      background-color: #191919;
+     margin: 3px;
+     border-radius: 24px;
+      z-index: 1000;
+	}
+	#nav{
+   height: 100%;
+  width: 0px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #191919;
+  overflow-x: hidden;
+  transition: 1s;
+
+
+	}
+	
+	ul{
+		position: relative;
+	      top: 10%;
+		list-style:none;
+		padding: 0;
+   
+
+	}
+.close{
+	position: absolute;
+	top: -10px;
+   right: 0;
+	color: white;
+	font-size:45px;
+}
+.close:hover{
+  color: white;
+}
+	li{
+		position: relative;
+		right: 10%;
+		padding: 0;
+		margin: 10%;
+		width: 100%;
+		font-size: 25px;
+		color: white;
+		border-bottom: 1px solid #fff;
+		border-top: 1px solid #fff;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		padding-left: 20%;
+
+	}
+	
+
+	body{
+    height: 100%;
+		width: 100%;
+		font-family: arial;
+  background: #232490;
+ transition: all 1s
+	}
+*{
+	margin: 0;
+	box-sizing: border-box;
+}
+	#title{
+		width: 100%;
+    height: 70px;
+		text-align: center;
+		position: relative;
+		position: fixed;
+       display: inline-block;
+       top: 50px;
+       text-transform: uppercase;
+       background: -webkit-linear-gradient(#191919,#fff,#CECE42,#FF1493,#B22222,#34495e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+       font-weight: bold;
+       font-size: 100px;
+      -webkit-text-fill-color: transparent;
+	}
+  #pp:hover{
+    background-color:#424949;
+  }
+  #pv:hover{
+    background-color:#424949;
+  }
+	
+	#pp{
+		
+		position: absolute;
+		top: 40%;
+		left: 50%;
+		transform:translate(-50%,-50%);
+		border: 0;
+           
+           outline: none;
+           color:red;
+           border-radius: 50%;
+           background-color: #191919;
+           font-size: 24px;
+           transition: 0.3s;
+            width: 150px;
+         height: 150px;
+         padding-top:10px;
+            padding-bottom:10px;
+           display: inline-flex;
+            align-items: center;
+            justify-content: center;
+           text-decoration: none;
+           font-weight: bold;
+     animation: 1s one
+	}
+#pv{
+  position: absolute;
+    top: 70%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+    border: 0;
+            
+           outline: none;
+           color:red;
+           border-radius: 24px;
+           background-color: #191919;
+           font-size: 24px;
+           transition: 0.3s;
+           width: 140px;
+         height: 140px;
+         padding-top:10px;
+            padding-bottom:10px;
+           display: inline-flex;
+            align-items: center;
+            justify-content: center;
+           text-decoration: none;
+           font-weight: bold;
+           animation:1.5s two;
+}
+	  	
+.modal {
+
+  display: none;
+  position: fixed; /* Stay in place */
+   z-index: 1; 
+  padding-top: 100px; 
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto;
+  
+    animation: 1s info;
+}
+.modal-content {
+ 
+	position: absolute;
+	top: 60%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+   border: 4px solid #333;
+   border-radius: 24px;
+  background-color: #191919 ;
+  border: 1px solid #191919;
+  width: 100%;
+  height: 70%;
+  color: white;
+  animation: 1s info;
+}
+
+/* The Close Button */
+.closes {
+  position: absolute;
+  right: 0;
+  font-size: 60px;
+  top: -10px;
+  color: white;
+  }
+
+
+
+
+p{
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  top: 5px;
+  display: inline-block;
+  color: #191919;
+
+}
+
+#myBtn{
+ 
+  border-radius: 50%;
+  outline-style: none;
+  background-color: #fff ;
+  display: inline-block;
+   position: absolute;
+   top: 1px;
+right:1px;
+height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #191919;
+}
+
+
+
+#mark{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+  font-size: 27px;
+  font-weight: bold;
+  position: relative;
+top: 3px;
+color: #fff;
+
+}
+
+h6{
+  display: inline-block;
+  position: relative;
+  font-weight: bold;
+  font-size: 30px;
+  
+  width:100%; 
+ 
+  color: black;
+}
+@keyframes info{
+ from{
+ 	top: 60%;
+	
+	transform: translate(-50%,-50%);
+ }
+ to{
+top: 60%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+ } 
+}
+
+@keyframes two {
+  from{
+  top: 0%;
+    left: -110%;
+    transform:translate(-50%,-50%);
+  }
+  to{
+top: 70%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+  } 
+}
+@keyframes one {
+  from{
+  top: 00%;
+    left: -110%;
+    transform:translate(-50%,-50%);
+  }
+  to{
+top: 40%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+  } 
+}
+</style>
+<script type="text/javascript">
+	
+	let ope= document.querySelector(".hamburger");
+	let nav= document.querySelector("#nav")
+	let clos= document.querySelector(".close")
+	ope.onclick=function(){
+	nav.style.width="250px"	
+}
+clos.onclick=function(){
+	nav.style.width="0px"	
+}
+
+
+
+
+var span =document.getElementsByClassName("closes")[0];
+addEventListener('resize', () => {
+  canvas.width = innerWidth
+  canvas.height = innerHeight
+
+ 
+})
+let pp = document.querySelector('#pp')
+
+var modal = document.getElementById("myModal");
+
+
+var btn = document.getElementById("myBtn");
+
+ btn.onclick =  function(){
+  modal.style.display ="block";
+  btn.style.display="none";
+
+ }
+
+ span.onclick =function(){
+  modal.style.display="none";
+  btn.style.display="block"
+ }
+
+
+window.onclick=function(event){
+if(event.target==modal){
+  modal.style.display="none";
+  btn.style.display="block"
+}
+}
+
+ pp.onclick=function(){
+
+ }
+ let canvas = document.querySelector("canvas");
+ canvas.width=window.innerWidth;
+ canvas.height=window.innerHeight; 
+
+</script>
+</body>
+</html>

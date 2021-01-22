@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="Viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  </style>
+</head>
+
+<body  ontouchstart="showCoordinates(event)" ontouchmove="showCoordinates(event)" ontouchend="myFunction()">
+<audio id="bad" src="lose1.mp3"></audio>
+<audio id="good" src="click2.mp3"></audio>
+<div class="container">
+  <canvas id="canvas"></canvas>
+  
+ <div id="info">
+    <div id="bestscore"><img  id="tt"src="trophet.png">
+   <span id="bscor">0</span>
+    </div>
+    
+  </div>
+<center><div id="score">
+    <span id="scor">0</span>
+
+    </div></center>
+ <center><div id="Message">Ready</div></center>
+  <div id="modal">
+ <span class="close">&times;</span>
+    <div id="content">
+  <div id="bestinfo">
+     <p ><b>BestScore:</b></p>
+     <p><b id="besinf">0</b></p>
+   </div>
+ <div id="messaginfo">
+      <p>Game over</p>
+    </div>
+     <button id="play" class="pla">Play again</button>
+  <div id="scorev">
+      <p ><b>Score:</b></p>
+      <p><b id="scinf">0</b></p>
+    </div>
+
+
+</div>
+  </div>
+</div>
+<script type="text/javascript" src="howler.js"></script>
+<script type="text/javascript">
+  var background= new Howl({
+    src:['backgroun1.mp3'],
+    loop:true
+  
+    });
+
+  background.play()
+
+  var click = new Howl({
+  src: ['click2.mp3']
+});
+  var bad = new Howl({
+  src: ['lost2.mp3']
+});
+
+
+function badMove(){
+    bad.play()
+}
+ function goodMove(){
+click.play()
+  }
+
+  let modal =document.querySelector("#modal") 
+let span=document.getElementsByClassName("close")[0]
+
+let play=document.querySelector("#play")
+let besinf=document.querySelector("besinf")
+let scinf=document.querySelector("#scinf")
+
+let tima=0
+ let Hightsc =0
+
+
+let bc
+   
+let xc
+   let yc
+   let canvas=document.querySelector("canvas");
+let c =canvas.getContext("2d")
+   canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+
+    let swidth=50
+   let swidth1=50
+   let swidth2=50
+   let swidth3=50
+    let swidth4=50
+     let swidth5=50
+  
+  
+ let randomColor
+  let colorPick
+let colortext="#333"
+let colortext1="#fff"
+let colortext2="#CECE42"
+let colortext3="#FF1493"
+let colortext4="#B22222"
+let colortext5="#34495e"
+
+let scor=0;
+ let currentBestscore= localStorage["highScore5"]
+ let actualscore=scor
+  let timeur=0;
+   let time=0
+  
+  
+  
+   
+     if (typeof localStorage["highScore5"] !== 'undefined') {
+ document.getElementById("bscor").innerHTML= localStorage["highScore5"]
+  
+}
+else  if (localStorage["highScore5"] = 0){
+   
+    document.getElementById("bscor").innerHTML="0"
+}
+         
+  
+ 
+
+ let  score= document.querySelector("#scor");
+ let message = document.querySelector("#Message");
+
+
+ 
+ 
+  let color=["#333", "#fff","#CECE42","#FF1493" , "#B22222","#34495e" ]
+
+
+   let start= setInterval(function(){
+  time= time +1;
+ if (time==1) {
+  document.querySelector("#Message").innerHTML="Ready";
+ }
+ if (time==2) {
+ document.querySelector("#Message").innerHTML="Go"; 
+
+ }
+ if (time==3) {
+ 
+   clearInterval(start);
+   colors()
+ }
+       
+   },500)
+
+   addEventListener('resize', () => {
+  canvas.width = innerWidth
+  canvas.height = innerHeight
+
+ 
+})
+   play.onclick=function(){
+    location.reload();
+   }
+
+function colors(){
+  randomColor=Math.floor(Math.random()*color.length)
+  
+   colorPick=color[randomColor];
+   message.style.color=colorPick;
+  
+ let m1=message.textContent="Black"
+let m2=message.textContent="White"
+let m3= message.textContent="Yellow"
+let m4=message.textContent="Pink"
+let m5=message.textContent="Red"
+let m6=message.textContent="Blue"
+
+ message.style.color=colorPick;
+ if (colorPick==colortext) {
+message.textContent=m1
+
+ }
+ if (colorPick==colortext1) {
+message.textContent=m2
+
+ }
+ if (colorPick==colortext2) {
+message.textContent=m3
+
+ }
+ if (colorPick==colortext3) {
+message.textContent=m4
+
+ }
+ if (colorPick==colortext4) {
+message.textContent=m5
+
+ }
+ if (colorPick==colortext5) {
+message.textContent=m6
+
+ }
+
+ 
+
+ }
+
+
+
+ let mousex
+ let mousey
+  
+
+   function showCoordinates(event) {
+   xc = event.touches[0].clientX;
+   yc = event.touches[0].clientY;
+  console.log(xc + ", " + yc)
+}
+function myFunction(){
+   xc=0;
+   yc=0
+ }
+ span.onclick=function(){
+  window.history.back();
+}
+
+function getDistance(x1,y1,x2,y2){
+  let xdistance = x2 -x1;
+  let ydistance = y2 - y1;
+  return Math.sqrt(Math.pow(xdistance, 2)+ Math.pow(ydistance, 2))
+}
+
+function Square(x, y, dx, dy,x1, y1, dx1, dy1,x2, y2, dx2, dy2,x3, y3, dx3, dy3,x4, y4, dx4, dy4,x5, y5, dx5, dy5,radius,swidth,swidth1,swidth2,swidth3,swidth4,swidth5){
+
+   this.x=x;
+   this.y=y;
+   this.dx=dx;
+   this.dy=dy;
+   this.swidth
+
+
+   this.x1=x1;
+   this.y1=y1;
+   this.dx1=dx1;
+   this.dy1=dy1;
+   this.swidth1
+
+
+
+   this.x2=x2;
+   this.y2=y2;
+   this.dx2=dx2;
+   this.dy2=dy2;
+   this.swidth2
+
+
+
+   this.x3=x3;
+   this.y3=y3;
+   this.dx3=dx3;
+   this.dy3=dy3;
+   this.swidth3
+
+   
+
+   this.x4=x4;
+   this.y4=y4;
+   this.dx4=dx4;
+   this.dy4=dy4;
+   this.swidth4
+
+   
+
+   this.x5=x5;
+   this.y5=y5;
+   this.dx5=dx5;
+   this.dy5=dy5;
+   this.swidth5
+
+   
+       this.swidth=swidth
+    this.swidth1=swidth1
+     this.swidth2=swidth2
+    this.swidth3=swidth3
+    this.swidth4=swidth4
+      this.swidth5=swidth5
+
+
+let c1=this.swidth
+let c2=this.swidth1
+let c3=this.swidth2
+let c4=this.swidth3
+let c5=this.swidth4
+let c6=this.swidth5
+
+
+
+
+
+   
+
+   let =color0="#333"
+      let =color1="#fff"
+      let =  color2="#CECE42"
+        let =  color3="#FF1493"
+         let = color4="#B22222"
+         let =   color5="#34495e"
+   
+ this.radius=radius
+this.draw=function(){
+  
+  c.lineJoin = "round";
+    c.lineWidth = radius;
+c.fillStyle=color0;
+c.strokeStyle=color0
+ c.strokeRect(this.x, this.y, this.swidth,  this.swidth);
+c.fillRect(this.x, this.y, this.swidth,  this.swidth);
+
+
+c.fillStyle=color1
+c.strokeStyle=color1
+ c.strokeRect(this.x1, this.y1, this.swidth1,this.swidth1);
+c.fillRect(this.x1, this.y1, this.swidth1,  this.swidth1);
+
+ 
+ c.fillStyle=color2;
+c.strokeStyle=color2
+ c.strokeRect(this.x2, this.y2, this.swidth2,  this.swidth2);
+c.fillRect(this.x2, this.y2, this.swidth2, this.swidth2);
+
+ 
+ c.fillStyle=color3
+c.strokeStyle=color3
+ c.strokeRect(this.x3, this.y3, this.swidth3 ,this.swidth3);
+c.fillRect(this.x3, this.y3, this.swidth3,  this.swidth3);
+
+ 
+ c.fillStyle=color4;
+c.strokeStyle=color4
+ c.strokeRect(this.x4, this.y4, this.swidth4,  this.swidth4);
+c.fillRect(this.x4, this.y4,  this.swidth4,  this.swidth4);
+
+ 
+ c.fillStyle=color5
+c.strokeStyle=color5
+ c.strokeRect(this.x5, this.y5, this.swidth5,  this.swidth5);
+c.fillRect(this.x5, this.y5, this.swidth5,  this.swidth5);
+
+ 
+
+}
+     this.update=function(){
+
+
+      if (this.y + swidth>innerHeight+ swidth && color0==colorPick){
+document.querySelector("#besinf").innerHTML=localStorage["highScore5"]
+document.querySelector("#scinf").innerHTML=scor
+modal.style.display="block"
+canvas.style.display="none";
+document.getElementById("scor").style.display="none";
+document.getElementById("info").style.display="none";
+message.textContent="Try again"
+clearInterval(again)
+background.mute(true)
+badMove()
+
+this.dy=0
+this.dy1=0
+this.dy2=0
+this.dy3=0
+this.dy4=0
+this.dy5=0
+} 
+if (this.y1 + swidth1>innerHeight+ swidth1 && color1==colorPick){
+document.querySelector("#besinf").innerHTML=localStorage["highScore5"]
+document.querySelector("#scinf").innerHTML=scor
+modal.style.display="block"
+canvas.style.display="none";
+document.getElementById("scor").style.display="none";
+document.getElementById("info").style.display="none";
+message.textContent="Try again"
+clearInterval(again)
+background.mute(true)
+badMove()
+
+this.dy=0
+this.dy1=0
+this.dy2=0
+this.dy3=0
+this.dy4=0
+this.dy5=0
+} 
+if (this.y2 + swidth2>innerHeight+ swidth2 && color2==colorPick){
+document.querySelector("#besinf").innerHTML=localStorage["highScore5"]
+document.querySelector("#scinf").innerHTML=scor
+modal.style.display="block"
+canvas.style.display="none";
+document.getElementById("scor").style.display="none";
+document.getElementById("info").style.display="none";
+message.textContent="Try again"
+clearInterval(again)
+background.mute(true)
+badMove()
+
+this.dy=0
+this.dy1=0
+this.dy2=0
+this.dy3=0
+this.dy4=0
+this.dy5=0
+} 
+if (this.y3 + swidth3>innerHeight+ swidth3 && color3==colorPick){
+document.querySelector("#besinf").innerHTML=localStorage["highScore5"]
+document.querySelector("#scinf").innerHTML=scor
+modal.style.display="block"
+canvas.style.display="none";
+document.getElementById("scor").style.display="none";
+document.getElementById("info").style.display="none";
+message.textContent="Try again"
+clearInterval(again)
+background.mute(true)
+badMove()
+
+this.dy=0
+this.dy1=0
+this.dy2=0
+this.dy3=0
+this.dy4=0
+this.dy5=0
+} 
+if (this.y4 + swidth4>innerHeight+ swidth4 && color4==colorPick){
+document.querySelector("#besinf").innerHTML=localStorage["highScore5"]
+document.querySelector("#scinf").innerHTML=scor
+modal.style.display="block"
+canvas.style.display="none";
+document.getElementById("scor").style.display="none";
+document.getElementById("info").style.display="none";
+message.textContent="Try again"
+clearInterval(again)
+background.mute(true)
+badMove()
+
+this.dy=0
+this.dy1=0
+this.dy2=0
+this.dy3=0
+this.dy4=0
+this.dy5=0
+} 
+if (this.y5 + swidth5>innerHeight+ swidth5 && color5==colorPick){
+document.querySelector("#besinf").innerHTML=localStorage["highScore5"]
+document.querySelector("#scinf").innerHTML=scor
+modal.style.display="block"
+canvas.style.display="none";
+document.getElementById("scor").style.display="none";
+document.getElementById("info").style.display="none";
+message.textContent="Try again"
+clearInterval(again)
+background.mute(true)
+badMove()
+
+this.dy=0
+this.dy1=0
+this.dy2=0
+this.dy3=0
+this.dy4=0
+this.dy5=0
+} 
+if (this.x +swidth>innerWidth+ this.swidth ||this.y +this.swidth>innerHeight+ this.swidth){
+  this.x= Math.random() * (innerWidth - swidth * 2) + swidth
+  this.y=-50    
+  }else if(getDistance(this.x,this.y, this.x1,this.y1)<this.swidth+this.swidth1){
+ this.x= Math.random() * (innerWidth - swidth * 2) + swidth;
+  }else if(getDistance(this.x,this.y, this.x2,this.y2)<this.swidth+this.swidth2){
+    this.x= Math.random() * (innerWidth -swidth* 2) + swidth;
+  }else if(getDistance(this.x,this.y, this.x3,this.y3)<this.swidth+this.swidth3){
+  this.x= Math.random() * (innerWidth - swidth * 2) + swidth;
+  }else if(getDistance(this.x,this.y, this.x4,this.y4)<this.swidth+this.swidth4){
+  this.x= Math.random() * (innerWidth - swidth * 2) + swidth;
+  }
+  else if(getDistance(this.x,this.y, this.x5,this.y5)<this.swidth+this.swidth5){
+  this.x= Math.random() * (innerWidth - swidth * 2) + swidth;
+  }
+  
+  
+ 
+
+ 
+
+
+ if (this.x1 +swidth1>innerWidth+swidth1 ||this.y1 + swidth1>innerHeight+ swidth1 ){
+  this.x1= Math.random() * (innerWidth - swidth1 * 2) + swidth1
+  this.y1=-50
+ }
+  else if(getDistance(this.x1,this.y1, this.x,this.y)<this.swidth1+this.swidth){
+   this.x1= Math.random() * (innerWidth - swidth1 * 2) + swidth1;
+  } else if(getDistance(this.x1,this.y1, this.x2,this.y2)<this.swidth+this.swidth2){
+  this.x1= Math.random() * (innerWidth - swidth1 * 2) + swidth1;
+  } else if(getDistance(this.x1,this.y1, this.x3,this.y3)<this.swidth+this.swidth3){
+    this.x1= Math.random() * (innerWidth - swidth1 * 2) + swidth1;
+  }
+  else if(getDistance(this.x1,this.y1, this.x5,this.y5)<this.swidth+this.swidth5){
+    this.x1= Math.random() * (innerWidth - swidth1 * 2) + swidth1;
+  }
+  else if(getDistance(this.x1,this.y1, this.x4,this.y4)<this.swidth+this.swidth4){
+    this.x1= Math.random() * (innerWidth - swidth1 * 2) + swidth1;
+  }
+
+
+
+ 
+ if (this.x2 +swidth2>innerWidth+swidth2  ||this.y2 + swidth2>innerHeight+ swidth2 ) {
+  this.x2= Math.random() * (innerWidth - swidth2 * 2)+ swidth
+  this.y2=-50
+ }
+else if(getDistance(this.x2,this.y2, this.x,this.y)<this.swidth2+this.swidth){
+    this.x2= Math.random() * (innerWidth - swidth2 * 2) + swidth2;
+  }else if(getDistance(this.x2,this.y2, this.x1,this.y1)<this.swidth2+this.swidth1){
+   this.x2= Math.random() * (innerWidth - swidth2 * 2) + swidth2;
+  }else if(getDistance(this.x2,this.y2, this.x3,this.y3)<this.swidth2+this.swidth3){
+    this.x2= Math.random() * (innerWidth - swidth2 * 2) + swidth2;
+  }else if(getDistance(this.x2,this.y2, this.x4,this.y4)<this.swidth2+this.swidth4){
+    this.x2= Math.random() * (innerWidth - swidth2 * 2) + swidth2;
+  }
+  else if(getDistance(this.x2,this.y2, this.x5,this.y5)<this.swidth2+this.swidth5){
+    this.x2= Math.random() * (innerWidth - swidth2 * 2) + swidth2;
+  }
+ 
+ if (this.x3 +swidth3>innerWidth+swidth3  ||this.y3 + swidth3>innerHeight + swidth3 ) {
+  this.x3=Math.random() * (innerWidth - swidth3 * 2) + swidth
+  this.y3=-50;
+ }
+    else if(getDistance(this.x3,this.y3, this.x,this.y)<this.swidth3+this.swidth){
+    this.x3= Math.random() * (innerWidth - swidth3 * 2) + swidth3;
+  }else if(getDistance(this.x3,this.y3, this.x1,this.y1)<this.swidth3+this.swidth1){
+    this.x3= Math.random() * (innerWidth - swidth3 * 2) + swidth3;
+  }else if(getDistance(this.x3,this.y3, this.x2,this.y2)<this.swidth3+this.swidth2){
+    this.x3= Math.random() * (innerWidth - swidth3 * 2) + swidth3;
+  }else if(getDistance(this.x3,this.y3, this.x5,this.y5)<this.swidth5+this.swidth5){
+    this.x3= Math.random() * (innerWidth - swidth3 * 2) + swidth3;
+  }
+  else if(getDistance(this.x3,this.y3, this.x4,this.y4)<this.swidth5+this.swidth4){
+    this.x3= Math.random() * (innerWidth - swidth3 * 2) + swidth3;
+  }
+
+
+ 
+ 
+ if (this.x4 +swidth4>innerWidth+swidth4  ||this.y4 + swidth4>innerHeight+ swidth4 ) {
+  this.x4= Math.random() * (innerWidth - swidth4 * 2) + swidth
+  this.y4=-50
+ }
+else if(getDistance(this.x4,this.y4, this.x,this.y)<this.swidth4+this.swidth){
+    this.x4= Math.random() * (innerWidth - swidth4 * 2) + swidth;
+  }else if(getDistance(this.x4,this.y4, this.x1,this.y1)<this.swidth4+this.swidth1){
+    this.x4= Math.random() * (innerWidth - swidth4 * 2) + swidth4;
+  }else if(getDistance(this.x4,this.y4, this.x2,this.y2)<this.swidth4+this.swidth2){
+    this.x4= Math.random() * (innerWidth - swidth4 * 2) + swidth4;
+  }
+  else if(getDistance(this.x4,this.y4, this.x3,this.y3)<this.swidth4+this.swidth3){
+    this.x4= Math.random() * (innerWidth - swidth4 * 2) + swidth4;
+  }
+  else if(getDistance(this.x4,this.y4, this.x5,this.y5)<this.swidth4+this.swidth5){
+    this.x4= Math.random() * (innerWidth - swidth4 * 2) + swidth4;
+  }
+
+ 
+ 
+ if (this.x5 +swidth5>innerWidth+swidth5  ||this.y5 + swidth5>innerHeight+ swidth5 ) {
+  this.x5= Math.random() * (innerWidth - swidth5 * 2)+ swidth
+  this.y5=-50
+ }
+else if(getDistance(this.x5,this.y5, this.x,this.y)<this.swidth5+this.swidth){
+    this.x5= Math.random() * (innerWidth - swidth5 * 2) + swidth5;
+  }else if(getDistance(this.x5,this.y5, this.x1,this.y1)<this.swidth5+this.swidth1){
+    this.x5= Math.random() * (innerWidth - swidth5* 2) + swidth5;
+  }else if(getDistance(this.x5,this.y5, this.x2,this.y2)<this.swidth5+this.swidth2){
+    this.x5= Math.random() * (innerWidth - swidth5* 2) + swidth5;
+  }
+  else if(getDistance(this.x5,this.y5, this.x4,this.y4)<this.swidth5+this.swidth4){
+    this.x5= Math.random() * (innerWidth - swidth5* 2) + swidth5;
+  }
+  else if(getDistance(this.x5,this.y5, this.x3,this.y3)<this.swidth5+this.swidth3){
+    this.x5= Math.random() * (innerWidth - swidth5* 2) + swidth5;
+  }
+
+
+ 
+this.y+=this.dy
+this.y1+=this.dy1
+this.y2+=this.dy2
+this.y3+=this.dy3
+this.y4+=this.dy4
+this.y5+=this.dy5
+
+let rx=this.x;
+let ry=this.y;
+let rx1=this.x1;
+let ry1=this.y1;
+let rx2=this.x2;
+let ry2=this.y2;
+let rx3=this.x3;
+let ry3=this.y3;
+let rx4=this.x4;
+let ry4=this.y4;
+let rx5=this.x5;
+let ry5=this.y5;
+
+         this.draw();
+     
+     
+    if(getDistance(xc,yc,rx,ry)<50 && color0==colorPick){
+ 
+ this.x=Math.random() * (innerWidth - swidth * 2) + swidth;
+ this.y=-50
+  this.swidth=50;
+  this.dy=(Math.random()*8)+1
+scor= scor+1
+score.textContent = scor
+
+
+if (scor > localStorage["highScore5"]) {
+      localStorage["highScore5"] = scor;
+    }
+
+    if (typeof localStorage["highScore5"] !== 'undefined') {
+   document.getElementById("bscor").innerHTML=localStorage["highScore5"];
+
+
+}
+goodMove()
+}
+  
+
+
+  
+
+
+  if(getDistance(xc,yc,rx,ry)<50 && color0!==colorPick){
+document.querySelector("#besinf").innerHTML=localStorage["highScore5"]
+document.querySelector("#scinf").innerHTML=scor
+modal.style.display="block"
+canvas.style.display="none";
+document.getElementById("scor").style.display="none";
+document.getElementById("info").style.display="none";
+message.textContent="Try again"
+clearInterval(again)
+background.mute(true)
+badMove()
+
+this.dy=0
+this.dy1=0
+this.dy2=0
+this.dy3=0
+this.dy4=0
+this.dy5=0
+}
+   if(getDistance(xc,yc,rx1,ry1)<50 &&color1==colorPick){
+   
+ this.x1=Math.random() * (innerWidth -swidth1 * 2) +swidth1;
+ this.y1=-50
+  this.swidth1=50
+  this.dy1=(Math.random()*8)+1
+scor= scor+1
+score.textContent = scor
+
+
+
+if (scor > localStorage["highScore5"]) {
+      localStorage["highScore5"] = scor;
+    }
+
+    if (typeof localStorage["highScore5"] !== 'undefined') {
+   document.getElementById("bscor").innerHTML=localStorage["highScore5"];
+
+}
+goodMove()
+}
+  
+  
+   
+ if(getDistance(xc,yc,rx1,ry1)<50 && color1!==colorPick){
+document.querySelector("#besinf").innerHTML=localStorage["highScore5"]
+document.querySelector("#scinf").innerHTML=scor
+modal.style.display="block"
+canvas.style.display="none";
+document.getElementById("scor").style.display="none";
+document.getElementById("info").style.display="none";
+message.textContent="Try again"
+clearInterval(again)
+background.mute(true)
+badMove()
+
+this.dy=0
+this.dy1=0
+this.dy2=0
+this.dy3=0
+this.dy4=0
+this.dy5=0
+
+}
+   if(getDistance(xc,yc,rx2,ry2)<50 && color2==colorPick){
+  
+ this.x2=Math.random() * (innerWidth - swidth2 * 2) + swidth2;
+ this.y2=-50
+  this.swidth2=50
+  this.dy2=(Math.random()*8)+1
+ scor= scor+1
+score.textContent = scor
+
+
+
+if (scor > localStorage["highScore5"]) {
+      localStorage["highScore5"] = scor;
+    }
+
+    if (typeof localStorage["highScore5"] !== 'undefined') {
+   document.getElementById("bscor").innerHTML=localStorage["highScore5"];
+
+}
+goodMove()
+}
+   
+if(getDistance(xc,yc,rx2,ry2)<50 && color2!==colorPick){
+document.querySelector("#besinf").innerHTML=localStorage["highScore5"]
+document.querySelector("#scinf").innerHTML=scor
+modal.style.display="block"
+canvas.style.display="none";
+document.getElementById("scor").style.display="none";
+document.getElementById("info").style.display="none";
+message.textContent="Try again"
+clearInterval(again)
+background.mute(true)
+badMove()
+
+this.dy=0
+this.dy1=0
+this.dy2=0
+this.dy3=0
+this.dy4=0
+this.dy5=0
+}
+   if(getDistance(xc,yc,rx3,ry3)<50 && color3==colorPick) {
+  
+ this.x3=Math.random() * (innerWidth - swidth3 * 2) + swidth3;
+ this.y3=-50
+  this.swidth3=50
+ this.dy3=(Math.random()*8)+1
+
+
+scor= scor+1
+score.textContent = scor
+
+
+
+if (scor > localStorage["highScore5"]) {
+      localStorage["highScore5"] = scor;
+    }
+
+    if (typeof localStorage["highScore5"] !== 'undefined') {
+   document.getElementById("bscor").innerHTML=localStorage["highScore5"];
+
+}
+goodMove()
+}
+  
+  
+   
+ if(getDistance(xc,yc,rx3,ry3)<50 && color3!==colorPick){
+document.querySelector("#besinf").innerHTML=localStorage["highScore5"]
+document.querySelector("#scinf").innerHTML=scor
+modal.style.display="block"
+canvas.style.display="none";
+document.getElementById("scor").style.display="none";
+document.getElementById("info").style.display="none";
+message.textContent="Try again"
+clearInterval(again)
+background.mute(true)
+badMove()
+
+this.dy=0
+this.dy1=0
+this.dy2=0
+this.dy3=0
+this.dy4=0
+this.dy5=0
+}
+   if(getDistance(xc,yc,rx4,ry4)<50 && color4==colorPick){
+  
+ this.x4=Math.random() * (innerWidth - swidth4 * 2) + swidth4;
+ this.y4=-50
+  this.swidth4=50
+ this.dy4=(Math.random()*8)+1
+scor= scor+1
+score.textContent = scor
+
+
+if (scor > localStorage["highScore5"]) {
+      localStorage["highScore5"] = scor;
+    }
+
+    if (typeof localStorage["highScore5"] !== 'undefined') {
+   document.getElementById("bscor").innerHTML=localStorage["highScore5"];
+
+}
+goodMove()
+}
+  
+     
+if(getDistance(xc,yc,rx4,ry4)<50 && color4!==colorPick){
+document.querySelector("#besinf").innerHTML=localStorage["highScore5"]
+document.querySelector("#scinf").innerHTML=scor
+modal.style.display="block"
+canvas.style.display="none";
+document.getElementById("scor").style.display="none";
+document.getElementById("info").style.display="none";
+message.textContent="Try again";
+clearInterval(again)
+background.mute(true)
+badMove()
+
+this.dy=0
+this.dy1=0
+this.dy2=0
+this.dy3=0
+this.dy4=0
+this.dy5=0
+}
+   if(getDistance(xc,yc,rx5,ry5)<50 && color5==colorPick){
+  
+ this.x5=Math.random() * (innerWidth - swidth5 * 2) + swidth5;
+ this.y5=-50
+  this.swidth5=50;
+ this.dy5=(Math.random()*8)+1
+scor= scor+1
+score.textContent = scor
+
+
+if (scor > localStorage["highScore5"]) {
+      localStorage["highScore5"] = scor;
+    }
+
+    if (typeof localStorage["highScore5"] !== 'undefined') {
+   document.getElementById("bscor").innerHTML=localStorage["highScore5"];
+
+}
+goodMove()
+}
+  
+
+   if(getDistance(xc,yc,rx5,ry5)<50 &&  color5!==colorPick){
+document.querySelector("#besinf").innerHTML=localStorage["highScore5"]
+document.querySelector("#scinf").innerHTML=scor
+modal.style.display="block"
+canvas.style.display="none";
+document.getElementById("scor").style.display="none";
+document.getElementById("info").style.display="none";
+message.textContent="Try again"
+clearInterval(again)
+background.mute(true)
+badMove()
+
+this.dy=0
+this.dy1=0
+this.dy2=0
+this.dy3=0
+this.dy4=0
+this.dy5=0
+}
+ 
+
+}
+        
+}
+
+
+
+let squareStore=[]
+function bb(){
+for (var i=0; i<1;i++){
+let x = Math.random() * (innerWidth - swidth * 2) + swidth;;
+var y = 0
+let dx=(Math.random()*7)+1
+let dy=(Math.random()*5)+1
+
+let x1 = Math.random() * (innerWidth - swidth1 * 2) + swidth1;;
+var y1 = 0
+let dx1= (Math.random()*9)+1
+let dy1= (Math.random()*7)+1
+
+let x2 = Math.random() * (innerWidth - swidth2 * 2) + swidth2;;
+var y2 = 0
+let dx2=(Math.random()*7)+1
+let dy2=(Math.random()*8)+1
+
+
+let x3 = Math.random() * (innerWidth - swidth3 * 2) + swidth3;;
+var y3 = 0
+let dx3=(Math.random()*10)+1
+let dy3=(Math.random()*9)+1
+
+
+let x4 = Math.random() * (innerWidth - swidth4 * 2) +swidth4;;
+var y4 = 0
+let dx4=(Math.random()*5)+1
+let dy4=(Math.random()*7)+1
+
+let x5 = Math.random() * (innerWidth - swidth5 * 2) + swidth5;;
+var y5 = 0
+let dx5=(Math.random()*7)+1
+let dy5=(Math.random()*3)+1
+
+let radius=15;
+
+squareStore.push(new Square(x, y, dx, dy,x1, y1, dx1, dy1,x2, y2, dx2, dy2,x3, y3, dx3, dy3,x4, y4, dx4, dy4,x5, y5, dx5, dy5, radius,swidth,swidth1,swidth2,swidth3,swidth4,swidth5));
+
+}
+}
+
+ let again = setInterval(function(){
+
+
+ colors()
+
+ },10000)
+ var cv=setInterval(function(){
+
+ tima=tima+1
+ console.log(tima)
+ if (tima==2) {
+  bb()
+ 
+ }
+ if(tima==150){
+  bb()
+
+   }
+ if(tima==200){
+  bb()
+
+ }
+  if(tima==300){
+  bb()
+
+ }
+ if(tima==500){
+  bb()
+
+ }
+ if(tima==800){
+  bb()
+
+ }
+},1000)
+ let changeDimension
+changeDimension='rgba(0,0,0,0.1)'
+
+var change=setInterval(function(){
+  
+  let dimension= ["rgba(0,0,0,0.1)", " rgba(0, 128, 128,0.1)","rgb(0,0,0,0.1)", "rgba(0,128,0,0.1)","rgba(148, 71, 98,0.1)", "rgba(0,0,0,0.1)", "rgba(0, 128, 115,0.1)","rgba(70, 65, 113,0.1)", "rgba(0,0,0,0.1)", "rgb(133, 93, 870,0.1)", "rgba(0,0,0,0.1)"]
+   let randomDimension=Math.floor(Math.random()*dimension.length);
+   let giveDimension = dimension[randomDimension];
+   changeDimension=giveDimension
+},15000)
+
+ function animate(){
+
+   requestAnimationFrame(animate);
+
+   
+   c.fillStyle =  changeDimension;
+   c.fillRect(0, 0, canvas.width, canvas.height);
+
+  
+ for(var i =0; i < squareStore.length;i++){
+    squareStore[i].update();
+   }
+ }
+ animate(); 
+
+
+
+</script>
+</body>
+</html>

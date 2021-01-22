@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<audio id="music" src="sond.mp3"></audio>
+</body>
+<canvas id="canvas"> </canvas>
+<style type="text/css">
+	canvas{
+		position: fixed
+	}
+</style>
+
+
+
+<script type="text/javascript">
+	let canvas=document.querySelector("canvas");
+
+   canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+let c = canvas.getContext("2d");
+let ix=innerWidth;
+let iy=innerHeight
+c.moveTo(ix/2-180, iy/2+85);
+c.lineTo(ix/2-30, iy/3+90)
+c.lineTo(ix/2+130, iy/2+85)
+c.lineWidth=50
+c.stroke()
+
+</script>
+</html>

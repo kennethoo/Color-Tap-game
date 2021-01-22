@@ -1,0 +1,40 @@
+
+<canvas  id="myCanvas"></canvas>
+
+<script>
+var canvas = document.getElementById("myCanvas");
+var context = canvas.getContext("2d");
+  canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+
+// Set rectangle and corner values
+var rectX = 100;
+var rectY = 50;
+var rectWidth = 100;
+var rectHeight = 100;
+var cornerRadius = 10;
+
+// Reference rectangle without rounding, for size comparison
+
+
+// Set faux rounded corners
+context.lineJoin = "round";
+context.lineWidth = cornerRadius;
+
+// Change origin and dimensions to match true size (a stroke makes the shape a bit larger)
+context.strokeRect(rectX, rectY, rectWidth, rectHeight);
+
+context.fillRect(rectX, rectY, rectWidth, rectHeight);
+
+// You can do the same thing with paths, like this triangle
+// Remember that a stroke will make the shape a bit larger so you'll need to fiddle with the
+// coordinates to get the correct dimensions.
+context.beginPath();
+context.moveTo(400, 60);
+context.lineTo(440, 140);
+context.lineTo(360, 140);
+context.closePath();
+context.stroke();
+context.fill();
+
+</script>
